@@ -15,7 +15,7 @@ using System.Web;
 
 namespace Middleware
 {
-    public partial class FormDimensionSettings : Form
+    public partial class FormAnalyzer : Form
     {
 
         SerialPort com = new SerialPort();
@@ -277,7 +277,7 @@ namespace Middleware
             
         }
 
-        public FormDimensionSettings()
+        public FormAnalyzer()
         {
             InitializeComponent();
         }

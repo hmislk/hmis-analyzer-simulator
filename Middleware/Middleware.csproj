@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{24A8CD60-45D8-4DB9-9E86-0C13D3CFCDEB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Middleware</RootNamespace>
-    <AssemblyName>Middleware</AssemblyName>
+    <RootNamespace>Analyzer</RootNamespace>
+    <AssemblyName>Analyzer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -48,27 +48,18 @@
   <ItemGroup>
     <Compile Include="Analyzer.cs" />
     <Compile Include="CommunicateProtocol.cs" />
-    <Compile Include="FormDimensionSettings.cs">
+    <Compile Include="FormAnalyzer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormDimensionSettings.Designer.cs">
-      <DependentUpon>FormDimensionSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="FormAnalyzer.Designer.cs">
+      <DependentUpon>FormAnalyzer.cs</DependentUpon>
     </Compile>
     <Compile Include="CommunicationParameterParity.cs" />
     <Compile Include="ModeOfCommunication.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormDimensionSettings.resx">
-      <DependentUpon>FormDimensionSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="FormAnalyzer.resx">
+      <DependentUpon>FormAnalyzer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -78,6 +69,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

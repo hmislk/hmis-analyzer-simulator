@@ -9,3 +9,13 @@ E:\Company\Development\Middleware\Middleware\Middleware\obj\Debug\Middleware.csp
 E:\Company\Development\Middleware\Middleware\Middleware\obj\Debug\Middleware.exe
 E:\Company\Development\Middleware\Middleware\Middleware\obj\Debug\Middleware.pdb
 E:\Company\Development\Middleware\Middleware\Middleware\obj\Debug\Middleware.FormDimensionSettings.resources
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe.config
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.pdb
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Middleware.csprojAssemblyReference.cache
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Middleware.FormAnalyzer.resources
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.Properties.Resources.resources
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Middleware.csproj.GenerateResource.cache
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Middleware.csproj.CoreCompileInputs.cache
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.exe
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.pdb
