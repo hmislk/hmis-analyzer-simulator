@@ -17,74 +17,60 @@ namespace Middleware
 {
     public partial class FormAnalyzer : Form
     {
-
         SerialPort com = new SerialPort();
-         String receivedText = "";
-         String previousMessage = "";
-         String nextMessage = "";
-        private  readonly HttpClient client = new HttpClient();
-        List<String> msgsFromAnaToLims  = new List<string>();
-        List<String> msgsFailedFromAnaToLims = new List<string>();
-        List<String> msgsFromLimsToAna= new List<string>();
-        List<String> msgsFailedFromLimsToAna = new List<string>();
-        List<String> msgsAll = new List<string>();
+        string status = "";
+        List<byte> messageInBytes = new List<byte>();
 
-         string url = "";
-         string username = "";
-         string password = "";
-         string status = "";
-        List<String> messagesToSentToLims;
-        List<String> messageSentToLims;
-
-         String messagesString;
-         String messagesBinary;
-
-         List<byte> messageInBytes = new List<byte>();
-
-        Analyzer analyzer = new Analyzer();
+        
 
         private void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Console.WriteLine("Data Received from Port " + Environment.NewLine );
-            try
+            int bytes = com.BytesToRead;
+            byte[] buffer = new byte[bytes];
+            com.Read(buffer, 0, bytes);
+            if (bytes == 1)
             {
-                String msg = "";
-                msg = com.ReadExisting();
-               Console.WriteLine(msg);
-                if (msg.Equals(Enq()))
-                {
-                    com.WriteLine(Ack());
-                    status += "Received Enq at " + DateTime.Now.ToString("h:mm:ss tt") + ". Ack Sent" + Environment.NewLine;
-                   
-                 }
-                else if (msg.Equals(Ack()))
-                {
-                    status += "Received Ack at " + DateTime.Now.ToString("h:mm:ss tt") + "." + Environment.NewLine;
-                }
-                else if (ContainsEndCharactor(msg,EndOfChar()))
-                {
-                    status += "Received a Message " + DateTime.Now.ToString("h:mm:ss tt") + ". " + Environment.NewLine;
-                    messagesString+=msg;
-                    msgsFromAnaToLims.Add(messagesString);
-                    messagesString = "";
-                    SendDataToLimsAsync().Wait();
-                }
-                else 
-                {
-                    status += "Message Receiving at " + DateTime.Now.ToString("h:mm:ss tt") + Environment.NewLine;
-                    messagesString += msg;
-                    messageInBytes.AddRange(StringsToBytes(msg));
-                    messagesBinary += StringToStringOfBytes(msg);
+                String temAscii = System.Text.Encoding.ASCII.GetString(new[] { buffer[0] });
 
+                if (buffer[0] == byteEnq())
+                {
+                    status += " ENQ Received. ACK Sent";
+                    com.Write(Ack());
                 }
-                this.Invoke(new EventHandler(DisplayText));
-                
+
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                if (ContainEnd(buffer))
+                {
+                    thisMessage.AddRange(buffer);
+                    allMessages.AddRange(thisMessage);
+                    //SendDataToLimsAsync();
+                    thisMessage = new List<byte>();
+                    status += "End of a Message " + Environment.NewLine;
+                }
+                else
+                {
+                    thisMessage.AddRange(buffer);
+                    status += "Part of a Message " + Environment.NewLine;
+                }
             }
+            this.Invoke(new EventHandler(DisplayText));
         }
+
+        private Boolean ContainEnd(Byte[] bytesToCheck)
+        {
+            foreach (Byte b in bytesToCheck)
+            {
+                if (b == (byte)ASCII.ETX)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
 
 
         private async Task SendDataToLimsAsync()
@@ -124,74 +110,65 @@ namespace Middleware
 
         private String EndOfChar()
         {
-            switch (analyzer)
-            {
-                case Analyzer.SysMaxXsSeries: return EndCharsOfSysMaxXsSeries();
-                case Analyzer.Dimension: return Etx();
-            }
-            return Etx();
+           return Etx();
         }
 
-        private  String EndCharsOfSysMaxXsSeries()
-        {
-            return (Cr() + Lf());
-        }
-
-        private  String Cr()
+        private String Cr()
         {
             return Character(13);
         }
 
 
-        private  String Etb()
+        private String Etb()
         {
             return Character(23);
         }
 
-        private  String Lf()
+        private String Lf()
         {
             return Character(10);
         }
 
-        private  String Ack()
+        private String Ack()
         {
             return Character(6);
         }
 
-        private  String Nak()
+        private String Nak()
         {
             return Character(21);
         }
 
-        private  String Stx()
+        private String Stx()
         {
             return Character(2);
         }
 
-        private  String Etx()
+        private String Etx()
         {
             return Character(3);
         }
 
-        private  String Enq()
+        private String Enq()
         {
             return Character(5);
         }
 
-        private  String Character(int charNo)
+        private String Character(int charNo)
         {
             char ack = (char)charNo;
             String m = ack.ToString();
             return m;
         }
 
+        
 
-        private  Boolean ContainsEndCharactor(String value, String endCharacter)
+        private Boolean ContainsEndCharactor(String value, String endCharacter)
         {
             return value.Contains(endCharacter);
         }
 
-        private  String ResultAcceptanceMessage()
+        private String ResultAcceptanceMessage()
         {
             char stx = (char)2;
             char etx = (char)2;
@@ -202,7 +179,7 @@ namespace Middleware
             return m;
         }
 
-        private  String NoRequestMessage()
+        private String NoRequestMessage()
         {
             char stx = (char)2;
             char etx = (char)3;
@@ -212,23 +189,23 @@ namespace Middleware
             return m;
         }
 
-        private  byte[] StringsToBytes(String value)
+        private byte[] StringsToBytes(String value)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(value);
             return bytes;
         }
 
-        private  String StringToStringOfBytes(String input)
+        private String StringToStringOfBytes(String input)
         {
             String s = "";
             foreach (char c in input)
             {
-                s += (int)c + "|" ;
+                s += (int)c + "|";
             }
             return s;
         }
 
-       
+
         private String ExtractMessageFromHtml(String html)
         {
             String s = html;
@@ -248,13 +225,23 @@ namespace Middleware
             {
                 txtAnaToLims.Text = messagesString;
             }
-           
+
         }
 
         #endregion
 
 
         #region FormEvents
+
+        private byte byteEnq()
+        {
+            return 5;
+        }
+
+        private byte byteAck()
+        {
+            return 6;
+        }
 
         private void DisplayText(object sender, EventArgs e)
         {
@@ -274,7 +261,7 @@ namespace Middleware
                 txtLimsToAna.Text += s + Environment.NewLine;
             }
             txtStatus.Text = status;
-            
+
         }
 
         public FormAnalyzer()
