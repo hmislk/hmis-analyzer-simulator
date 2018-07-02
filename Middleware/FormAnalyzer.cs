@@ -43,15 +43,12 @@ namespace Middleware
             {
                 if (ContainEnd(buffer))
                 {
-                    thisMessage.AddRange(buffer);
-                    allMessages.AddRange(thisMessage);
-                    //SendDataToLimsAsync();
-                    thisMessage = new List<byte>();
+                    
                     status += "End of a Message " + Environment.NewLine;
                 }
                 else
                 {
-                    thisMessage.AddRange(buffer);
+                  
                     status += "Part of a Message " + Environment.NewLine;
                 }
             }
@@ -62,7 +59,7 @@ namespace Middleware
         {
             foreach (Byte b in bytesToCheck)
             {
-                if (b == (byte)ASCII.ETX)
+                if (b ==byteEtx() || b == byteEot())
                 {
                     return true;
                 }
@@ -72,38 +69,6 @@ namespace Middleware
 
 
 
-
-        private async Task SendDataToLimsAsync()
-        {
-            status += "Trying to send Data to LIMS";
-            foreach (String tm in msgsFromAnaToLims)
-            {
-                string longurl = url;
-                var uriBuilder = new UriBuilder(longurl);
-
-                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                query["username"] = txtUsername.Text;
-                query["password"] = txtPassword.Text;
-
-                query["msg"] = StringToStringOfBytes(tm);
-
-                status += tm;
-
-                uriBuilder.Query = query.ToString();
-                longurl = uriBuilder.ToString();
-
-                // var values = new Dictionary<string, string> { { "username", username }, { "password", password }, { "msg", msg } };
-                // var content = new FormUrlEncodedContent(values);
-
-                var response = await client.GetAsync(longurl);
-                var responseString = await response.Content.ReadAsStringAsync();
-                responseString = ExtractMessageFromHtml(responseString);
-                status += "Received data from LIMS";
-                msgsFromLimsToAna.Add(responseString);
-                msgsFromAnaToLims.Remove(tm);
-                this.Invoke(new EventHandler(DisplayText));
-            }
-        }
 
 
         #region functions
@@ -217,14 +182,7 @@ namespace Middleware
 
         private void FillMessages()
         {
-            if (optBinary.Checked)
-            {
-                txtAnaToLims.Text = messagesBinary;
-            }
-            else
-            {
-                txtAnaToLims.Text = messagesString;
-            }
+            
 
         }
 
@@ -243,6 +201,16 @@ namespace Middleware
             return 6;
         }
 
+            private byte byteEtx()
+            {
+                return 3;
+            }
+
+        private byte byteEot()
+        {
+            return 4;
+        }
+
         private void DisplayText(object sender, EventArgs e)
         {
             DisplayText();
@@ -250,16 +218,7 @@ namespace Middleware
 
         private void DisplayText()
         {
-            txtLimsToAna.Text = "";
-            txtAnaToLims.Text = "";
-            foreach (String s in msgsFromAnaToLims)
-            {
-                txtAnaToLims.Text += s + Environment.NewLine;
-            }
-            foreach (String s in msgsFromLimsToAna)
-            {
-                txtLimsToAna.Text += s + Environment.NewLine;
-            }
+           
             txtStatus.Text = status;
 
         }
@@ -282,8 +241,8 @@ namespace Middleware
             key = key.OpenSubKey("Middleware", true);
 
 
-            key.CreateSubKey("Dimention");
-            key = key.OpenSubKey("Dimention", true);
+            key.CreateSubKey("Analyzer");
+            key = key.OpenSubKey("Analyzer", true);
 
 
 
@@ -298,7 +257,6 @@ namespace Middleware
                 txtBitLength.Text = (String)key.GetValue("BitLength", "8");
                 txtStopBits.Text = (String)key.GetValue("StopBits", "One");
                 txtParity.Text = (String)key.GetValue("Parity", "NONE");
-                txtUrl.Text = (String)key.GetValue("Url", "");
             }
 
 
@@ -315,14 +273,14 @@ namespace Middleware
             key = key.OpenSubKey("Middleware", true);
 
 
-            key.CreateSubKey("Dimention");
-            key = key.OpenSubKey("Dimention", true);
+            key.CreateSubKey("Analyzer");
+            key = key.OpenSubKey("Analyzer", true);
 
             key.SetValue("Port", cmbPort.Text);
             key.SetValue("BaudRate", txtBaudRate.Text);
             key.SetValue("Parity", txtParity.Text);
             key.SetValue("StopBits", txtStopBits.Text);
-            key.SetValue("Url", txtUrl.Text);
+           
 
         }
 
@@ -333,8 +291,6 @@ namespace Middleware
 
         private void btnClearStatus_Click(object sender, EventArgs e)
         {
-            msgsFromAnaToLims = new List<string>();
-            msgsFromLimsToAna = new List<string>();
             status = "";
             DisplayText();
         }
@@ -367,9 +323,6 @@ namespace Middleware
         private void btnClearMessages_Click(object sender, EventArgs e)
         {
 
-            txtAnaToLims.Text = "";
-            messagesString = "";
-            messagesBinary = "";
             messageInBytes = new List<byte>();
         }
 
@@ -377,10 +330,6 @@ namespace Middleware
         {
             btnOpen.Enabled = false;
             btnClose.Enabled = true;
-            url = txtUrl.Text;
-            username = txtUsername.Text;
-            password = txtPassword.Text;
-            analyzer = Analyzer.SysMaxXsSeries;
             try
             {
                 com.PortName = cmbPort.Text;
@@ -455,6 +404,14 @@ namespace Middleware
             }
 
             com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            if (com.IsOpen)
+            {
+                com.Write(Stx() + txtToSent.Text + Etx());
+            }
         }
     }
 }

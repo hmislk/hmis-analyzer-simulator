@@ -45,7 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtToSent = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -178,14 +178,14 @@
             this.label2.TabIndex = 35;
             this.label2.Text = "Status";
             // 
-            // textBox1
+            // txtToSent
             // 
-            this.textBox1.Location = new System.Drawing.Point(8, 180);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(247, 103);
-            this.textBox1.TabIndex = 36;
+            this.txtToSent.Location = new System.Drawing.Point(8, 180);
+            this.txtToSent.Multiline = true;
+            this.txtToSent.Name = "txtToSent";
+            this.txtToSent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtToSent.Size = new System.Drawing.Size(247, 103);
+            this.txtToSent.TabIndex = 36;
             // 
             // btnSend
             // 
@@ -195,6 +195,7 @@
             this.btnSend.TabIndex = 37;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // FormAnalyzer
             // 
@@ -202,7 +203,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 318);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtToSent);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label1);
@@ -244,7 +245,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtToSent;
         private System.Windows.Forms.Button btnSend;
     }
 }

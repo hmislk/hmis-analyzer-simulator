@@ -1,0 +1,9 @@
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Middleware.FormAnalyzer.resources
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.Properties.Resources.resources
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.csproj.GenerateResource.cache
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.csproj.CoreCompileInputs.cache
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.exe
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.pdb
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe.config
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe
+E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.pdb
