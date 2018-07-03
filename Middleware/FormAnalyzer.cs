@@ -315,10 +315,7 @@ namespace Middleware
 
         #endregion
 
-        private void btnListMessages_Click(object sender, EventArgs e)
-        {
-            FillMessages();
-        }
+        
 
         private void btnClearMessages_Click(object sender, EventArgs e)
         {
