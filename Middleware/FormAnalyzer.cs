@@ -17,106 +17,174 @@ namespace Middleware
 {
     public partial class FormAnalyzer : Form
     {
+
+        #region variables
+
         SerialPort com = new SerialPort();
         string status = "";
-        List<byte> messageInBytes = new List<byte>();
+        List<byte> message = new List<byte>();
 
-        
+        #endregion
+
+        #region mainFunctions
 
         private void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             int bytes = com.BytesToRead;
             byte[] buffer = new byte[bytes];
             com.Read(buffer, 0, bytes);
-            if (bytes == 1)
-            {
-                String temAscii = System.Text.Encoding.ASCII.GetString(new[] { buffer[0] });
+            message.AddRange(buffer);
 
-                if (buffer[0] == byteEnq())
+            foreach (Byte b in buffer)
+            {
+                //status += (char)b;
+                if (b == ByteEnq())
                 {
-                    status += " ENQ Received. ACK Sent";
+                    com.Write(Ack());
+                    status += DateTime.Now.ToString("dd/MMM/yy H:mm") + " Received <ENQ>. <ACK> sent." + Environment.NewLine;
+                    message = new List<byte>();
+                    this.Invoke(new EventHandler(DisplayText));
+                }
+                else if (b == ByteAck())
+                {
+                    status += DateTime.Now.ToString("dd/MMM/yy H:mm") + " Received <ACK>." + Environment.NewLine;
+                    message = new List<byte>();
+                    this.Invoke(new EventHandler(DisplayText));
+                }
+                else if (b == ByteEot() || b == ByteEtx())
+                {
+                    status += DateTime.Now.ToString("dd/MMM/yy H:mm") + " Received a message from Analyzer." + Environment.NewLine;
+                    status += BytesToString(message) + Environment.NewLine;
+                    this.Invoke(new EventHandler(DisplayText));
+                    message = new List<byte>();
                     com.Write(Ack());
                 }
-
             }
-            else
-            {
-                if (ContainEnd(buffer))
-                {
-                    
-                    status += "End of a Message " + Environment.NewLine;
-                }
-                else
-                {
-                  
-                    status += "Part of a Message " + Environment.NewLine;
-                }
-            }
-            this.Invoke(new EventHandler(DisplayText));
-        }
-
-        private Boolean ContainEnd(Byte[] bytesToCheck)
-        {
-            foreach (Byte b in bytesToCheck)
-            {
-                if (b ==byteEtx() || b == byteEot())
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
 
+        #endregion
 
-
-
-        #region functions
-
-        private String EndOfChar()
-        {
-           return Etx();
-        }
+        #region getDate
 
         private String Cr()
         {
-            return Character(13);
+            return Character(ByteCr());
         }
 
 
         private String Etb()
         {
-            return Character(23);
+            return Character(ByteEtb());
         }
 
         private String Lf()
         {
-            return Character(10);
+            return Character(ByteLf());
         }
 
         private String Ack()
         {
-            return Character(6);
+            return Character(ByteAck());
         }
 
         private String Nak()
         {
-            return Character(21);
+            return Character(ByteNak());
         }
 
         private String Stx()
         {
-            return Character(2);
+            return Character(ByteStx());
         }
 
         private String Etx()
         {
-            return Character(3);
+            return Character(ByteEtx());
         }
 
         private String Enq()
         {
-            return Character(5);
+            return Character(ByteEnq());
+        }
+
+        public byte ByteEnq()
+        {
+            return 5;
+        }
+
+        public byte ByteStx()
+        {
+            return 2;
+        }
+
+        public byte ByteAck()
+        {
+            return 6;
+        }
+
+        public byte ByteEtx()
+        {
+            return 3;
+        }
+
+        public byte ByteEot()
+        {
+            return 4;
+        }
+
+        public byte ByteNak()
+        {
+            return 21;
+        }
+
+
+        public byte ByteFs()
+        {
+            return 28;
+        }
+
+        public byte ByteLf()
+        {
+            return 10;
+        }
+
+        public byte ByteCr()
+        {
+            return 13;
+        }
+
+        public byte ByteEtb()
+        {
+            return 23;
+        }
+
+        public byte ByteGs()
+        {
+            return 29;
+        }
+
+        public byte ByteRs()
+        {
+            return 30;
+        }
+
+        public byte ByteUs()
+        {
+            return 31;
+        }
+
+
+        #endregion
+
+        #region supportiveFunctions
+
+        private String BytesToString(List<byte> bytesToConvert)
+        {
+            Byte[] temBytes = bytesToConvert.ToArray();
+            String temStr = "";
+            temStr = Encoding.ASCII.GetString(temBytes, 0, temBytes.Length);
+            return temStr;
         }
 
         private String Character(int charNo)
@@ -124,13 +192,6 @@ namespace Middleware
             char ack = (char)charNo;
             String m = ack.ToString();
             return m;
-        }
-
-        
-
-        private Boolean ContainsEndCharactor(String value, String endCharacter)
-        {
-            return value.Contains(endCharacter);
         }
 
         private String ResultAcceptanceMessage()
@@ -180,36 +241,9 @@ namespace Middleware
             return result;
         }
 
-        private void FillMessages()
-        {
-            
-
-        }
-
         #endregion
 
-
         #region FormEvents
-
-        private byte byteEnq()
-        {
-            return 5;
-        }
-
-        private byte byteAck()
-        {
-            return 6;
-        }
-
-            private byte byteEtx()
-            {
-                return 3;
-            }
-
-        private byte byteEot()
-        {
-            return 4;
-        }
 
         private void DisplayText(object sender, EventArgs e)
         {
@@ -218,7 +252,7 @@ namespace Middleware
 
         private void DisplayText()
         {
-           
+
             txtStatus.Text = status;
 
         }
@@ -264,7 +298,6 @@ namespace Middleware
 
         }
 
-
         private void FormDimensionSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software", true);
@@ -280,7 +313,7 @@ namespace Middleware
             key.SetValue("BaudRate", txtBaudRate.Text);
             key.SetValue("Parity", txtParity.Text);
             key.SetValue("StopBits", txtStopBits.Text);
-           
+
 
         }
 
@@ -311,19 +344,13 @@ namespace Middleware
             }
         }
 
-
-
-        #endregion
-
-        
-
-        private void btnClearMessages_Click(object sender, EventArgs e)
+        private void BtnClearMessages_Click(object sender, EventArgs e)
         {
 
-            messageInBytes = new List<byte>();
+            message = new List<byte>();
         }
 
-        private void btnOpen_Click_1(object sender, EventArgs e)
+        private void BtnOpen_Click(object sender, EventArgs e)
         {
             btnOpen.Enabled = false;
             btnClose.Enabled = true;
@@ -403,13 +430,13 @@ namespace Middleware
             com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private void BtnSend_Click(object sender, EventArgs e)
         {
             String tt = txtToSent.Text;
-         String[]   tts=tt.Split(new string[] { "+" }, StringSplitOptions.None);
+            String[] tts = tt.Split(new string[] { "+" }, StringSplitOptions.None);
 
             String temTxtToSent = "";
-            foreach(String s in tts)
+            foreach (String s in tts)
             {
                 byte b = Byte.Parse(s);
                 temTxtToSent += Character(b);
@@ -419,5 +446,7 @@ namespace Middleware
                 com.Write(Stx() + temTxtToSent + Etx());
             }
         }
+
+        #endregion
     }
 }

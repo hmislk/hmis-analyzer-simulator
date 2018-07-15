@@ -149,7 +149,7 @@
             this.btnOpen.TabIndex = 27;
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click_1);
+            this.btnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
             // label1
             // 
@@ -195,7 +195,7 @@
             this.btnSend.TabIndex = 37;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
             // FormAnalyzer
             // 
