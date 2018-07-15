@@ -405,9 +405,18 @@ namespace Middleware
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            String tt = txtToSent.Text;
+         String[]   tts=tt.Split(new string[] { "+" }, StringSplitOptions.None);
+
+            String temTxtToSent = "";
+            foreach(String s in tts)
+            {
+                byte b = Byte.Parse(s);
+                temTxtToSent += Character(b);
+            }
             if (com.IsOpen)
             {
-                com.Write(Stx() + txtToSent.Text + Etx());
+                com.Write(Stx() + temTxtToSent + Etx());
             }
         }
     }

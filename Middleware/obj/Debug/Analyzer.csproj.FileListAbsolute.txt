@@ -7,3 +7,4 @@ E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.pdb
 E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe.config
 E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe
 E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.pdb
+E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.csprojAssemblyReference.cache
