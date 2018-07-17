@@ -447,6 +447,14 @@ namespace Middleware
             }
         }
 
+
+        private void BtnEnq_Click(object sender, EventArgs e)
+        {
+            com.Write(Enq());
+            status += "Enq Sent";
+        }
+
         #endregion
+
     }
 }

@@ -47,6 +47,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtToSent = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
+            this.BtnEnq = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbPort
@@ -197,11 +198,22 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
+            // BtnEnq
+            // 
+            this.BtnEnq.Location = new System.Drawing.Point(270, 287);
+            this.BtnEnq.Name = "BtnEnq";
+            this.BtnEnq.Size = new System.Drawing.Size(97, 23);
+            this.BtnEnq.TabIndex = 38;
+            this.BtnEnq.Text = "Enq";
+            this.BtnEnq.UseVisualStyleBackColor = true;
+            this.BtnEnq.Click += new System.EventHandler(this.BtnEnq_Click);
+            // 
             // FormAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(911, 318);
+            this.Controls.Add(this.BtnEnq);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtToSent);
             this.Controls.Add(this.label2);
@@ -247,5 +259,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtToSent;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button BtnEnq;
     }
 }
