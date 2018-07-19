@@ -48,6 +48,8 @@
             this.txtToSent = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.BtnEnq = new System.Windows.Forms.Button();
+            this.btnDimFirstPolMessage = new System.Windows.Forms.Button();
+            this.BtnDimConversationalPollMessage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbPort
@@ -124,7 +126,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(802, 287);
+            this.btnClear.Location = new System.Drawing.Point(55, 352);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(97, 23);
             this.btnClear.TabIndex = 26;
@@ -167,7 +169,7 @@
             this.txtStatus.Multiline = true;
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtStatus.Size = new System.Drawing.Size(629, 235);
+            this.txtStatus.Size = new System.Drawing.Size(522, 329);
             this.txtStatus.TabIndex = 34;
             // 
             // label2
@@ -185,12 +187,12 @@
             this.txtToSent.Multiline = true;
             this.txtToSent.Name = "txtToSent";
             this.txtToSent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtToSent.Size = new System.Drawing.Size(247, 103);
+            this.txtToSent.Size = new System.Drawing.Size(247, 166);
             this.txtToSent.TabIndex = 36;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(158, 287);
+            this.btnSend.Location = new System.Drawing.Point(158, 352);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(97, 23);
             this.btnSend.TabIndex = 37;
@@ -200,19 +202,41 @@
             // 
             // BtnEnq
             // 
-            this.BtnEnq.Location = new System.Drawing.Point(270, 287);
+            this.BtnEnq.Location = new System.Drawing.Point(798, 46);
             this.BtnEnq.Name = "BtnEnq";
-            this.BtnEnq.Size = new System.Drawing.Size(97, 23);
+            this.BtnEnq.Size = new System.Drawing.Size(196, 23);
             this.BtnEnq.TabIndex = 38;
             this.BtnEnq.Text = "Enq";
             this.BtnEnq.UseVisualStyleBackColor = true;
             this.BtnEnq.Click += new System.EventHandler(this.BtnEnq_Click);
             // 
+            // btnDimFirstPolMessage
+            // 
+            this.btnDimFirstPolMessage.Location = new System.Drawing.Point(798, 75);
+            this.btnDimFirstPolMessage.Name = "btnDimFirstPolMessage";
+            this.btnDimFirstPolMessage.Size = new System.Drawing.Size(196, 23);
+            this.btnDimFirstPolMessage.TabIndex = 39;
+            this.btnDimFirstPolMessage.Text = "Dim First Poll Message";
+            this.btnDimFirstPolMessage.UseVisualStyleBackColor = true;
+            this.btnDimFirstPolMessage.Click += new System.EventHandler(this.BtnDimFirstPolMessage_Click);
+            // 
+            // BtnDimConversationalPollMessage
+            // 
+            this.BtnDimConversationalPollMessage.Location = new System.Drawing.Point(798, 104);
+            this.BtnDimConversationalPollMessage.Name = "BtnDimConversationalPollMessage";
+            this.BtnDimConversationalPollMessage.Size = new System.Drawing.Size(196, 23);
+            this.BtnDimConversationalPollMessage.TabIndex = 40;
+            this.BtnDimConversationalPollMessage.Text = "Dim Conversational Poll Message";
+            this.BtnDimConversationalPollMessage.UseVisualStyleBackColor = true;
+            this.BtnDimConversationalPollMessage.Click += new System.EventHandler(this.BtnDimConversationalPollMessage_Click);
+            // 
             // FormAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 318);
+            this.ClientSize = new System.Drawing.Size(1006, 387);
+            this.Controls.Add(this.BtnDimConversationalPollMessage);
+            this.Controls.Add(this.btnDimFirstPolMessage);
             this.Controls.Add(this.BtnEnq);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtToSent);
@@ -260,5 +284,7 @@
         private System.Windows.Forms.TextBox txtToSent;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button BtnEnq;
+        private System.Windows.Forms.Button btnDimFirstPolMessage;
+        private System.Windows.Forms.Button BtnDimConversationalPollMessage;
     }
 }

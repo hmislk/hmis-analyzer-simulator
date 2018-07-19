@@ -98,6 +98,11 @@ namespace Middleware
             return Character(ByteStx());
         }
 
+        private String Fs()
+        {
+            return Character(ByteFs());
+        }
+
         private String Etx()
         {
             return Character(ByteEtx());
@@ -452,9 +457,26 @@ namespace Middleware
         {
             com.Write(Enq());
             status += "Enq Sent";
+            this.Invoke(new EventHandler(DisplayText));
         }
 
         #endregion
 
+        private void BtnDimFirstPolMessage_Click(object sender, EventArgs e)
+        {
+            String pm = Stx() + "P" + Fs() + "9300" + Fs() + "1" + Fs() + "1" + Fs() + "0" + Fs() + "6C" + Etx();
+            com.Write(pm);
+            status += Environment.NewLine + "Sening : " + pm;
+            this.Invoke(new EventHandler(DisplayText));
+        }
+
+        private void BtnDimConversationalPollMessage_Click(object sender, EventArgs e)
+        {
+            String pm = Stx() + "P" + Fs() + "92300" + Fs() + "0" + Fs() + "1" + Fs() + "0" + Fs() + "6B" + Etx();
+            com.Write(pm);
+            status += Environment.NewLine + "Sening : " + pm;
+            this.Invoke(new EventHandler(DisplayText));
+
+        }
     }
 }
