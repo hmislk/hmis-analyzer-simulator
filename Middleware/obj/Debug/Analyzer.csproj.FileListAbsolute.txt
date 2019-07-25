@@ -8,3 +8,13 @@ E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe.con
 E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.exe
 E:\Company\Development\Middleware\Analyzer\Middleware\bin\Debug\Analyzer.pdb
 E:\Company\Development\Middleware\Analyzer\Middleware\obj\Debug\Analyzer.csprojAssemblyReference.cache
+D:\SSS\Development\C#\mw\Middleware\bin\Debug\Analyzer.exe.config
+D:\SSS\Development\C#\mw\Middleware\bin\Debug\Analyzer.exe
+D:\SSS\Development\C#\mw\Middleware\bin\Debug\Analyzer.pdb
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.csprojAssemblyReference.cache
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Middleware.FormAnalyzer.resources
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.Properties.Resources.resources
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.csproj.GenerateResource.cache
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.csproj.CoreCompileInputs.cache
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.exe
+D:\SSS\Development\C#\mw\Middleware\obj\Debug\Analyzer.pdb
